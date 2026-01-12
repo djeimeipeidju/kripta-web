@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Kripta-Organizer — Manual de Instruções</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="style.css" />
+
+<style>
+/* ===============================
+   MANUAL — LAYOUT
+   =============================== */
+
+.manual-wrap {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 24px;
+}
+
+/* ===============================
+   MENU LATERAL
+   =============================== */
+.manual-nav {
+  border: 1px solid #222;
+  border-radius: 10px;
+  background: #0c0c0c;
+  padding: 14px;
+  height: fit-content;
+  position: sticky;
+  top: 120px;
+}
+
+.manual-nav h3 {
+  font-size: 13px;
+  margin-bottom: 10px;
+  color: #aaa;
+}
+
+.manual-nav button {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 6px;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+/* ===============================
+   CONTEÚDO
+   =============================== */
+.manual-content {
+  max-width: 820px;
+}
+
+.manual-content section {
+  margin-bottom: 48px;
+}
+
+.manual-content h2 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.manual-content p {
+  line-height: 1.6;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+.manual-box {
+  border-left: 3px solid rgba(255,200,120,0.5);
+  background: rgba(255,200,120,0.05);
+  padding: 12px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #ddd;
+}
+</style>
+</head>
+
+<body>
+
+<h1 class="app-header">
+  <div class="header-top">
+    <div class="header-left">
+      <span class="logo">K</span>
+      <span class="corp-name">KriptaCorp</span>
+      <span class="product-name">Kripta-Organizer</span>
+    </div>
+    <div class="header-right">
+      <button onclick="location.href='index.html'">Voltar ao App</button>
+    </div>
+  </div>
+
+  <div class="header-slogan">
+    Manual de Instruções
+  </div>
+</h1>
+
+<div class="manual-wrap">
+
+  <!-- MENU -->
+  <aside class="manual-nav">
+    <h3>Seções</h3>
+    <button onclick="go('intro')">Introdução</button>
+    <button onclick="go('conceito')">Conceito</button>
+    <button onclick="go('uso')">Uso Básico</button>
+    <button onclick="go('hierarquia')">Hierarquia</button>
+    <button onclick="go('historico')">Histórico</button>
+    <button onclick="go('export')">Exportação</button>
+    <button onclick="go('filosofia')">Filosofia Kripta</button>
+  </aside>
+
+  <!-- CONTEÚDO -->
+  <main class="manual-content">
+
+    <section id="intro">
+      <h2>Introdução</h2>
+      <p>
+        O Kripta-Organizer é um sistema de organização semântica, hierárquica
+        e histórica. Ele não é apenas um editor de notas.
+      </p>
+      <div class="manual-box">
+        Aqui, cada ação deixa rastro. Nada é invisível.
+      </div>
+    </section>
+
+    <section id="conceito">
+      <h2>Conceito Central</h2>
+      <p>
+        O Organizer trabalha com unidades de informação que podem conter
+        outras unidades, formando estruturas vivas.
+      </p>
+      <p>
+        O sistema registra criação, edição e movimentação de cada entidade.
+      </p>
+    </section>
+
+    <section id="uso">
+      <h2>Uso Básico</h2>
+      <p>
+        • Crie notas com o botão “Nova Nota”  
+        <br />
+        • Clique em uma nota para entrar nela  
+        <br />
+        • Edite livremente — o salvamento é automático
+      </p>
+    </section>
+
+    <section id="hierarquia">
+      <h2>Hierarquia</h2>
+      <p>
+        Cada nota pode conter outras notas. Isso cria um mapa mental navegável.
+      </p>
+      <div class="manual-box">
+        A hierarquia não é visual decorativa — ela governa o contexto.
+      </div>
+    </section>
+
+    <section id="historico">
+      <h2>Histórico Semântico</h2>
+      <p>
+        O histórico registra ações reais: criar, editar, mover.
+      </p>
+      <p>
+        Ele permite compreender a evolução do pensamento ao longo do tempo.
+      </p>
+    </section>
+
+    <section id="export">
+      <h2>Exportação e Importação</h2>
+      <p>
+        O Organizer permite exportar todo o conteúdo ou apenas a nota aberta.
+      </p>
+      <p>
+        Os dados permanecem locais, sob controle do usuário.
+      </p>
+    </section>
+
+    <section id="filosofia">
+      <h2>Filosofia Kripta</h2>
+      <p>
+        Organização não é ordem rígida.  
+        É clareza progressiva.
+      </p>
+      <div class="manual-box">
+        O Kripta-Organizer não impõe método — ele revela estrutura.
+      </div>
+    </section>
+
+  </main>
+
+</div>
+
+<script>
+function go(id) {
+  document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+}
+</script>
+
+</body>
+</html>
