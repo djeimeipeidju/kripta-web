@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Kripta-Organizer — Histórico</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="style.css" />
+
+<style>
+body { background:#0b0b0b; color:#eaeaea; font-family:system-ui; }
+
+h1 { margin-bottom:6px; }
+
+/* ===== Métricas ===== */
+.metrics {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:8px; margin:10px 0;
+}
+.metric {
+  border:1px solid #222; border-radius:8px;
+  padding:10px; background:#0f0f0f;
+}
+.metric h3 { font-size:12px; color:#aaa; margin:0 0 6px; }
+.metric .value { font-size:20px; font-weight:700; }
+
+/* ===== Densidade ===== */
+.density {
+  border:1px solid #222; border-radius:8px;
+  padding:10px; background:#0f0f0f; margin:14px 0;
+}
+.bars {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(22px,1fr));
+  gap:4px; align-items:end; height:90px;
+}
+.bar { background:#355a8a; border-radius:4px 4px 0 0; }
+.bar span {
+  font-size:10px; color:#ccc; display:block;
+  text-align:center; margin-top:4px;
+}
+
+/* ===== TOP N ===== */
+.topn {
+  border:2px dashed #4aa3ff;
+  border-radius:12px;
+  padding:12px;
+  background:#0c1622;
+  margin:18px 0;
+}
+.topn h3 { font-size:13px; color:#6cf; margin:0 0 4px; }
+.topn .hint { font-size:11px; color:#8aa4c4; margin-bottom:8px; }
+.topn .row {
+  display:grid;
+  grid-template-columns:36px 1fr 50px;
+  gap:8px;
+  padding:6px 0;
+  border-bottom:1px solid #1f2b3a;
+}
+.topn .row:last-child { border-bottom:none; }
+.rank { color:#6cf; font-weight:700; }
+.name { overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+.count { color:#9ad; font-weight:700; text-align:right; }
+
+/* ===== Filtros ===== */
+.filters {
+  border:1px solid #222; border-radius:8px;
+  padding:8px; background:#0f0f0f; margin:14px 0;
+}
+.filters label { font-size:13px; margin-right:14px; }
+
+/* ===== Timeline ===== */
+.timeline {
+  border:1px solid #222; border-radius:8px;
+  overflow:hidden; background:#0f0f0f;
+}
+.event {
+  padding:12px; border-bottom:1px solid #222;
+  cursor:pointer;
+}
+.event:hover { background:#151515; }
+.event-type { font-size:12px; font-weight:700; color:#9ad; }
+.event-time { font-size:12px; color:#777; }
+.event.dead { opacity:.5; cursor:default; }
+.empty { padding:12px; color:#777; }
+
+.load-more {
+  width:100%;
+  margin-top:8px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Histórico Semântico</h1>
+
+<div style="margin-bottom:10px">
+  <button id="back">← Voltar</button>
+  <span id="context" style="margin-left:10px;color:#aaa"></span>
+</div>
+
+<!-- Métricas -->
+<div class="metrics">
+  <div class="metric"><h3>Total</h3><div id="m-total" class="value">0</div></div>
+  <div class="metric"><h3>CRIADAS</h3><div id="m-criada" class="value">0</div></div>
+  <div class="metric"><h3>EDITADAS</h3><div id="m-editada" class="value">0</div></div>
+  <div class="metric"><h3>MOVIDAS</h3><div id="m-movida" class="value">0</div></div>
+</div>
+
+<!-- Densidade -->
+<div class="density">
+  <h3>Densidade temporal</h3>
+  <div id="density-bars" class="bars"></div>
+</div>
+
+<!-- Top N -->
+<div class="topn">
+  <h3>Atividade por Entidade — Ranking</h3>
+  <div class="hint">Entidades mais ativas no período</div>
+  <div id="topn-list"></div>
+</div>
+
+<!-- Filtros -->
+<div class="filters">
+  <label>Período:
+    <select id="filter-time">
+      <option value="7d">7 dias</option>
+      <option value="30d" selected>30 dias</option>
+    </select>
+  </label>
+
+  <label>Top:
+    <select id="topn">
+      <option value="5">5</option>
+      <option value="10" selected>10</option>
+    </select>
+  </label>
+</div>
+
+<div id="history" class="timeline"></div>
+
+<script src="kernel.js"></script>
+<script>
+const params = new URLSearchParams(location.search);
+const unitId = params.get("unit");
+
+const container = document.getElementById("history");
+const contextLabel = document.getElementById("context");
+const densityBars = document.getElementById("density-bars");
+const topnList = document.getElementById("topn-list");
+const filterTime = document.getElementById("filter-time");
+const topnSelect = document.getElementById("topn");
+
+const mTotal = document.getElementById("m-total");
+const mCriada = document.getElementById("m-criada");
+const mEditada = document.getElementById("m-editada");
+const mMovida = document.getElementById("m-movida");
+
+/* ===== Paginação ===== */
+const PAGE_SIZE = 50;
+let offset = 0;
+let hasMore = false;
+
+function render() {
+  let page;
+
+  if (unitId) {
+    page = kernel.getHistoryForUnitPage(unitId, {
+      limit: PAGE_SIZE,
+      offset
+    });
+    contextLabel.textContent = "Histórico da Entidade";
+  } else {
+    page = kernel.getGlobalHistoryPage({
+      limit: PAGE_SIZE,
+      offset
+    });
+    contextLabel.textContent = "Histórico Global";
+  }
+
+  let events = page.items;
+  hasMore = page.hasMore;
+
+  /* Filtro temporal */
+  const days = filterTime.value === "7d" ? 7 : 30;
+  const limitTime = Date.now() - days * 864e5;
+  events = events.filter(e => e.timestamp >= limitTime);
+
+  /* Métricas */
+  mTotal.textContent = page.total;
+  mCriada.textContent = events.filter(e => e.type === "CRIADA").length;
+  mEditada.textContent = events.filter(e => e.type === "EDITADA").length;
+  mMovida.textContent = events.filter(e => e.type === "MOVIDA").length;
+
+  /* Densidade */
+  densityBars.innerHTML = "";
+  const mapD = {};
+  events.forEach(e => {
+    const d = new Date(e.timestamp).toISOString().slice(0,10);
+    mapD[d] = (mapD[d] || 0) + 1;
+  });
+  Object.entries(mapD).forEach(([_, v]) => {
+    const bar = document.createElement("div");
+    bar.className = "bar";
+    bar.style.height = Math.min(100, v * 20) + "%";
+    bar.innerHTML = `<span>${v}</span>`;
+    densityBars.appendChild(bar);
+  });
+
+  /* Top N */
+  topnList.innerHTML = "";
+  const mapE = {};
+  events.forEach(e => {
+    mapE[e.unitId] = (mapE[e.unitId] || 0) + 1;
+  });
+  const sorted = Object.entries(mapE).sort((a,b) => b[1] - a[1]);
+  if (sorted.length <= 1) {
+    topnList.innerHTML = '<div class="empty">Apenas uma entidade ativa.</div>';
+  } else {
+    sorted.slice(0, topnSelect.value).forEach(([id,c], i) => {
+      const u = kernel.getUnit(id);
+      const row = document.createElement("div");
+      row.className = "row";
+      row.innerHTML = `
+        <div class="rank">#${i+1}</div>
+        <div class="name">${u?.title || "(removida)"}</div>
+        <div class="count">${c}</div>`;
+      if (u) row.onclick = () => location.href = `index.html?open=${id}`;
+      topnList.appendChild(row);
+    });
+  }
+
+  /* Timeline */
+  if (offset === 0) container.innerHTML = "";
+
+  events.forEach(e => {
+    const u = kernel.getUnit(e.unitId);
+    const div = document.createElement("div");
+    div.className = "event" + (u ? "" : " dead");
+    div.innerHTML = `
+      <div class="event-type">${e.type}</div>
+      <div>${u?.title || "(removida)"}</div>
+      <div class="event-time">${new Date(e.timestamp).toLocaleString()}</div>`;
+    if (u) div.onclick = () => location.href = `index.html?open=${e.unitId}`;
+    container.appendChild(div);
+  });
+
+  if (hasMore) {
+    const more = document.createElement("button");
+    more.className = "load-more";
+    more.textContent = "Carregar mais";
+    more.onclick = () => {
+      offset += PAGE_SIZE;
+      render();
+    };
+    container.appendChild(more);
+  }
+}
+
+/* Reset paginação ao mudar filtros */
+filterTime.onchange = () => { offset = 0; render(); };
+topnSelect.onchange = () => { offset = 0; render(); };
+
+document.getElementById("back").onclick = () => history.back();
+render();
+</script>
+
+</body>
+</html>
