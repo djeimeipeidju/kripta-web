@@ -1,11 +1,267 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <title>Kripta Focus</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kripta-Focus — MVP</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-  <h1>Kripta-Focus MVP</h1>
-  <p>Baseline público ativo.</p>
+
+<!-- =========================================================
+     SISTEMA DE EXISTÊNCIA — DECLARAÇÃO FUNDACIONAL (v1.0)
+     CONGELADA — IMUTÁVEL
+
+     Este MVP é um artefato do SISTEMA KRIPTA.
+
+     Sua existência operacional, continuidade e legitimidade
+     são determinadas exclusivamente pelas regras fundacionais
+     do Sistema Kripta, executadas em ambiente web.
+
+     Fora desse sistema, este artefato não constitui
+     um MVP Kripta, independentemente de cópia, execução
+     ou modificação de seus arquivos.
+
+     Declaração ontológica e não operacional.
+     ========================================================= -->
+
+<!-- =========================================================
+     BOOTSTRAP SOBERANO — KRIPTA
+     (SEMPRE O PRIMEIRO SCRIPT)
+     ========================================================= -->
+<script type="module" src="/kripta/bootstrap.js"></script>
+
+<!-- =========================================================
+     CABEÇALHO GLOBAL — KRIPTACORP
+     ========================================================= -->
+<header class="kf-global-header">
+
+  <div class="kf-brand">
+    <div class="kf-logo">K</div>
+    <div class="kf-corp">KriptaCorp</div>
+  </div>
+
+  <div class="kf-panel-buttons kf-panel-primary">
+    <div class="kf-panel-buttons">
+      <a href="ui-2.html">Histórico</a>
+      <a href="ui-3.html">Medite</a>
+      <a href="ui-4.html" class="kf-nav-link kf-nav-comments">
+        Meu Diário
+      </a>
+    </div>
+
+    <div class="kf-panel-buttons kf-panel-secondary">
+      <a href="#">Kripta-Timer</a>
+      <a href="#">Kripta-Compass</a>
+      <a href="#">Kripta-Thermo</a>
+      <a href="#">Kripta-Agenda</a>
+      <a href="#">Kripta-Organizer</a>
+    </div>
+  </div>
+
+</header>
+
+<!-- =========================================================
+     CONTAINER ATLAS
+     ========================================================= -->
+<div class="atlas-container">
+
+  <!-- =======================================================
+       HERO DO PRODUTO
+       ======================================================= -->
+  <header class="kf-header">
+    <h1 id="focus-title">Kripta-Focus</h1>
+    <div class="kf-subtitle">Mens sana in corpore sano ad focum</div>
+  </header>
+
+  <!-- =======================================================
+       BARRA DE ENERGIA
+       ======================================================= -->
+  <div class="focus-gradient-bar"></div>
+
+  <!-- =======================================================
+       BLOCO DIÁRIO — TERMÔMETRO + SNAPSHOT
+       ======================================================= -->
+  <div class="focus-daily-row">
+
+    <section class="kf-section">
+      <h2 class="kf-section-title">Termômetro Diário</h2>
+      <p class="kf-section-caption">Período de monitoramento: 00:00 → 23:59</p>
+
+      <div id="day-thermometer-wrapper">
+        <div id="day-thermometer-bar"></div>
+      </div>
+    </section>
+
+    <div class="snapshot-card">
+      <div>
+        <strong>Snapshot da História</strong><br>
+        <span>Fotografia do momento</span>
+      </div>
+      <button id="btn-history-snapshot">Tirar snapshot</button>
+    </div>
+
+  </div>
+
+  <!-- =======================================================
+       GRADE PRINCIPAL — GRÁFICO + HOLOGRAMAS + ÚLTIMA HORA
+       ======================================================= -->
+  <section class="kf-row-spectrum"
+    style="
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr 1fr;
+      grid-template-rows:auto auto;
+      gap:25px;
+      margin:35px 0;
+    ">
+
+    <!-- GRÁFICO PRINCIPAL -->
+    <div class="kf-card kf-card-spectrum"
+         style="grid-column:1; grid-row:1 / span 2;">
+      <h2>Gráfico Principal do Foco</h2>
+
+      <div id="focus-main-chart" class="kf-main-chart-placeholder">
+        <canvas id="dna3-chart" width="960" height="540"></canvas>
+
+        <div class="kf-graph-pattern-controls">
+          <button id="graph-focus-minus">– Foco</button>
+          <button id="graph-focus-plus">+ Foco</button>
+          <span id="graph-inline-percent" class="graph-inline-percent">0%</span>
+        </div>
+      </div>
+
+      <div id="insight-core-block"></div>
+
+      <div class="kf-graph-status">
+        <p><strong>Taxa de velocidade do foco (delay):</strong> Atualize...</p>
+      </div>
+    </div>
+
+    <!-- HOLOGRAMAS -->
+    <div class="kf-card kf-holo-card">
+      <h3 class="kf-holograma-title" data-holo="1">—</h3>
+      <div class="kf-holograma-mini">
+        <div class="kf-holograma-mini-core kf-holo-heart"></div>
+      </div>
+    </div>
+
+    <div class="kf-card kf-holo-card">
+      <h3 class="kf-holograma-title" data-holo="2">—</h3>
+      <div class="kf-holograma-mini">
+        <div class="kf-holograma-mini-core kf-holo-user"></div>
+      </div>
+    </div>
+
+    <div class="kf-card kf-holo-card">
+      <h3 class="kf-holograma-title" data-holo="3">—</h3>
+      <div class="kf-holograma-mini">
+        <div class="kf-holograma-mini-core kf-holo-orbit"></div>
+      </div>
+    </div>
+
+    <!-- ÚLTIMA HORA -->
+    <div class="kf-card kf-card-chart"
+         style="grid-column:2 / 5; grid-row:2;">
+      <h2>Última hora (zoom)</h2>
+
+      <div id="hour-thermometer-wrapper">
+        <div id="hour-thermometer-bar"></div>
+      </div>
+
+      <div id="insight-alerts-block"
+           data-scope="semantic-disabled"
+           aria-hidden="true"></div>
+    </div>
+
+  </section>
+
+  <!-- =======================================================
+       EIXO LÓGICO
+       ======================================================= -->
+  <section class="kf-logical-axis">
+    <div class="logical-axis-overlay"></div>
+  </section>
+
+  <!-- =======================================================
+       CORPO PRINCIPAL — CARTÕES
+       ======================================================= -->
+  <main class="kf-main">
+    <div class="kf-panel-left">
+
+      <div class="kf-card kf-controls-section">
+        <h2>Controles e monitoramento do foco</h2>
+
+        <div class="kf-controls">
+          <button id="btn-focus-minus">– Foco</button>
+          <button id="btn-focus-plus">+ Foco</button>
+          <span id="focus-inline-percent" class="kf-inline-percent">0%</span>
+        </div>
+
+        <div class="kf-status">
+          <span id="focus-status-text"></span>
+          <span id="focus-state-pill" class="kf-state-pill">Trabalho</span>
+        </div>
+
+        <div class="kf-state-selector">
+          <h3>Estado de foco</h3>
+          <div class="kf-state-buttons">
+            <button data-state-key="trabalho" class="kf-state-btn">Trabalho</button>
+            <button data-state-key="estudo" class="kf-state-btn">Estudo</button>
+            <button data-state-key="lazer" class="kf-state-btn">Lazer</button>
+            <button data-state-key="descanso" class="kf-state-btn">Descanso</button>
+            <button data-state-key="redes" class="kf-state-btn">Redes</button>
+            <button data-state-key="hobbie" class="kf-state-btn">Hobbie</button>
+            <button data-state-key="navegacao" class="kf-state-btn">Navegação</button>
+            <button data-state-key="familia" class="kf-state-btn">Família</button>
+          </div>
+        </div>
+
+        <button id="btn-reset-day" class="kf-reset-btn">Resetar Dia</button>
+      </div>
+
+      <div class="kf-card kf-card-focus">
+        <h2>Termômetro de Foco</h2>
+        <div id="focus-start-info"></div>
+        <div id="session-clock"></div>
+        <div id="state-clock"></div>
+        <div id="focus-daily-average"></div>
+
+        <div id="focus-level-bar-wrapper">
+          <div id="focus-level-bar-fill"></div>
+        </div>
+
+        <div id="focus-level-percent">0%</div>
+        <div id="insight-focus-block"></div>
+      </div>
+
+      <div class="kf-card kf-card-minilines">
+        <h2>Mini-linhas por estado</h2>
+        <div id="mini-lines"></div>
+        <div id="insight-patterns-block"></div>
+      </div>
+
+    </div>
+  </main>
+
+</div>
+
+<!-- =========================================================
+     SCRIPTS DO MVP
+     (executam apenas se o Bootstrap liberar)
+     ========================================================= -->
+<script src="script.js"></script>
+<script src="kripta-bridge.js"></script>
+
+<div id="kripta-cau-anchor" style="display:none;"></div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    requestAnimationFrame(() => {
+      window.dispatchEvent(new CustomEvent("kripta:layout-ready"));
+    });
+  });
+</script>
+
 </body>
 </html>

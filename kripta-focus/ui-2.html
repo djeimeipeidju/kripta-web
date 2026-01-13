@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kripta-Focus — Histórico</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+        content="Histórico de foco e estados mentais registrados no Kripta-Focus." />
+
+  <!-- CSS GLOBAL -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- =====================================================
+       UI-2 — HERO SIMPLES
+       ===================================================== -->
+  <section class="ui2-hero">
+
+    <h1>Histórico de Foco</h1>
+
+    <p class="ui2-subtitle">
+      Registro cronológico dos estados de foco ao longo do tempo
+    </p>
+
+    <!-- BOTÃO DE SNAPSHOT -->
+    <div style="margin-top:14px; margin-bottom:10px;">
+      <button id="btn-history-snapshot">
+        Tirar snapshot agora
+      </button>
+    </div>
+
+  </section>
+
+  <!-- =====================================================
+       UI-2 — LISTA DE REGISTROS
+       ===================================================== -->
+  <main class="ui2-history">
+
+    <!-- PLACEHOLDER (será substituído pelo JS) -->
+    <article class="ui2-entry">
+      <div class="ui2-entry-date">08 Jan 2026</div>
+      <div class="ui2-entry-state">Trabalho</div>
+      <div class="ui2-entry-duration">2h 15min</div>
+    </article>
+
+    <article class="ui2-entry">
+      <div class="ui2-entry-date">08 Jan 2026</div>
+      <div class="ui2-entry-state">Estudo</div>
+      <div class="ui2-entry-duration">1h 40min</div>
+    </article>
+
+    <article class="ui2-entry">
+      <div class="ui2-entry-date">07 Jan 2026</div>
+      <div class="ui2-entry-state">Descanso</div>
+      <div class="ui2-entry-duration">45min</div>
+    </article>
+
+  </main>
+
+  <!-- =====================================================
+       UI-2 — RETORNO
+       ===================================================== -->
+  <footer class="ui2-footer">
+    <a href="index.html" class="ui2-back-link">
+      ← Voltar para o Focus
+    </a>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script src="kripta-bridge.js"></script>
+  <script src="ui2-history.js"></script>
+
+</body>
+</html>

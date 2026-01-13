@@ -1,0 +1,1944 @@
+/* -----------------------------------------------------------
+   KRIPTA-FOCUS — THEME ATLAS v1.3
+   ROTA F: gráfico 16:9 + destaque máximo
+----------------------------------------------------------- */
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #05070A;
+    color: rgba(255,255,255,0.85);
+}
+
+.atlas-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 20px 30px;
+}
+
+/* ===== HEADER ===== */
+.kf-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* ============================================================
+   PATCH — HOLOGRAMAS REATIVOS (ESTADO NEUTRO)
+   ============================================================ */
+
+.holo-neutral {
+    background: #444 !important;
+    filter: drop-shadow(0 0 6px #444) !important;
+    opacity: 0.55;
+}
+
+/* ============================================================
+   PATCH — PULSAÇÃO UNIVERSAL DOS HOLOGRAMAS
+   (usa a cor atual do estado automaticamente)
+   ============================================================ */
+
+@keyframes holoPulse {
+    0% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 10px currentColor);
+    }
+    50% {
+        transform: scale(1.08);
+        filter: drop-shadow(0 0 22px currentColor);
+    }
+    100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 10px currentColor);
+    }
+}
+
+/* Aplica pulsação a todos os hologramas ativos */
+.kf-holograma-mini-core:not(.holo-neutral) {
+    animation: holoPulse 2.6s ease-in-out infinite;
+}
+
+/* Pulsação mais discreta para neutros */
+.kf-holograma-mini-core.holo-neutral {
+    animation: holoPulse 4.2s ease-in-out infinite;
+    opacity: 0.45;
+}
+
+/* ============================================================
+   PATCH — GLOW DO HOLOGRAMA NA COR DO ESTADO
+   Correção do uso de currentColor
+   ============================================================ */
+
+/* Garante que o holograma tenha 'color' igual ao estado */
+.kf-holograma-mini-core {
+    color: inherit;
+}
+
+/* Quando ativo, a cor já vem do JS (StateColorMap) */
+.kf-holo-card:not(:has(.holo-neutral)) {
+    color: inherit;
+}
+
+/* Ajuste explícito do glow para usar currentColor corretamente */
+@keyframes holoPulse {
+    0% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 10px currentColor);
+    }
+    50% {
+        transform: scale(1.08);
+        filter: drop-shadow(0 0 22px currentColor);
+    }
+    100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 10px currentColor);
+    }
+}
+
+
+.kf-header h1 {
+    font-size: 46px;
+    color: #fff;
+}
+
+.kf-subtitle {
+    font-size: 18px;
+    opacity: 0.7;
+}
+
+.kf-header::after {
+    content: "";
+    display: block;
+    width: 220px;
+    height: 2px;
+    margin: 18px auto 0;
+    background: linear-gradient(90deg,#00e3ff55,transparent);
+}
+
+/* ===== TERMÔMETRO ===== */
+.kf-section-title {
+    font-size: 28px;
+    margin-bottom: 6px;
+}
+
+.kf-section-caption {
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+#day-thermometer-wrapper {
+    margin: 20px 0;
+    width: 100%;
+    height: 40px;
+    background: #0A1A2A;
+    border-radius: 18px;
+    padding: 3px;
+}
+
+#day-thermometer-bar {
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    background: linear-gradient(90deg,#00a8ff,#00ff6a,#e4ff00,#ff8c00,#ff0000);
+    transform-origin: left;
+}
+
+/* ===== LINHA SUPERIOR ===== */
+.kf-row-spectrum {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 25px;
+    margin: 35px 0;
+}
+
+/* NOVO: GRID CORRIGIDO PARA O INDEX AJUSTADO */
+.kf-row-spectrum.kf-grid-fix {
+    grid-template-columns: 2fr 1fr 1fr 1fr 2fr !important;
+    grid-auto-rows: auto !important;
+}
+
+/* Cartões gerais */
+.kf-card {
+    background: #080c11;
+    padding: 22px;
+    border-radius: 14px;
+    border: 1px solid #0c2538;
+    box-shadow: 0 0 14px #00131f inset;
+}
+
+/* Cartões dos hologramas — NÃO ESTICAR */
+.kf-holo-card {
+    height: auto !important;
+}
+
+/* Posicionamento do cartão Última hora na primeira linha */
+.kf-hour-top {
+    align-self: start !important;
+    height: auto !important;
+}
+
+/* ===== GRÁFICO ===== */
+.kf-main-chart-placeholder {
+    background: #060a12;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 0 25px #001421 inset;
+}
+
+canvas#dna3-chart {
+    width: 100% !important;
+    aspect-ratio: 16 / 9 !important;
+    height: auto !important;
+    border-radius: 10px;
+}
+
+#dna2-signal,
+#dna2-ssignal {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #00e3ff;
+}
+
+/* ===== HOLOGRAMAS MINI ===== */
+.kf-holograma-mini {
+    height: 180px;
+    background: #0A1A2A;
+    border: 1px dashed #113344;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.kf-holograma-mini-core {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    filter: drop-shadow(0 0 12px #00e3ff);
+}
+
+.kf-holo-heart { background: radial-gradient(circle,#ff2d55,#a30021); }
+.kf-holo-user  { background: radial-gradient(circle,#00e3ff,#003344); }
+.kf-holo-orbit { background: radial-gradient(circle,#0044ff,#001533); }
+
+/* ===== LAYOUT PRINCIPAL ===== */
+.kf-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+/* ===== PAINEL ESQUERDO ===== */
+.kf-card-focus,
+.kf-controls-section,
+.kf-card-minilines {
+    background: #080c11;
+    border: 1px solid #0c2538;
+    border-radius: 14px;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+#focus-level-bar-wrapper {
+    width: 100%;
+    height: 20px;
+    background: #1a1f2d;
+    border-radius: 10px;
+    padding: 2px;
+    margin-top: 18px;
+}
+
+#focus-level-bar-fill {
+    width: 0%;
+    height: 100%;
+    background: #dd3a3a;
+    border-radius: 8px;
+}
+
+/* MINI-LINES */
+.kf-card-minilines h2 {
+    margin-bottom: 12px;
+}
+
+#mini-lines div {
+    transition: width 0.2s ease;
+}
+
+/* ===== PAINEL DIREITO ===== */
+.kf-card-chart,
+.kf-card-holograma {
+    background: #080c11;
+    border: 1px solid #0c2538;
+    border-radius: 14px;
+    padding: 25px;
+}
+
+#hour-thermometer-wrapper {
+    width: 100%;
+    height: 24px;
+    background: #0A1A2A;
+    border-radius: 16px;
+    padding: 3px;
+    margin-bottom: 12px;
+}
+
+#hour-thermometer-bar {
+    height: 100%;
+    width: 0%;
+    background: #00e3ff;
+    border-radius: 14px;
+}
+
+/* ===== HOLOGRAMA PRINCIPAL ===== */
+.kf-holograma {
+    width: 100%;
+    height: 420px;
+    background: #050a14;
+    border: 1px dashed #113344;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.kf-holo-main {
+    width: 140px;
+    height: 220px;
+    position: relative;
+    filter: drop-shadow(0 0 20px #00e3ff);
+}
+
+.kf-holo-base {
+    width: 120px;
+    height: 28px;
+    background: radial-gradient(circle,#00e3ff,#003344);
+    border-radius: 50px;
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+}
+
+.kf-holo-body {
+    width: 60px;
+    height: 90px;
+    background: radial-gradient(circle,#00cfff,#003344);
+    border-radius: 30px;
+    position: absolute;
+    bottom: 26px;
+    left: 40px;
+}
+
+/* ============================================================
+   CHIPS VISUAIS NOS BOTÕES –Foco / +Foco
+   ============================================================ */
+
+.kf-inline-percent {
+    margin-left: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #00e3ff;
+    opacity: 0.85;
+}
+
+#btn-focus-minus::after {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-left: 6px;
+    border-radius: 50%;
+    background: #ff4d4d;
+    box-shadow: 0 0 6px #ff4d4d88;
+}
+
+#btn-focus-plus::after {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-left: 6px;
+    border-radius: 50%;
+    background: #5dff72;
+    box-shadow: 0 0 6px #5dff7288;
+}
+
+/* ============================================================
+   CORES DOS ESTADOS
+   ============================================================ */
+
+.kf-state-btn {
+    position: relative;
+    overflow: visible;
+}
+
+.kf-state-btn::after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 6px;
+    box-shadow: 0 0 6px currentColor;
+}
+
+/* Cores */
+.kf-state-btn[data-state-key="trabalho"]   { background: none; color: #ff0000; }
+.kf-state-btn[data-state-key="estudo"]     { background: none; color: #ff7f00; }
+.kf-state-btn[data-state-key="lazer"]      { background: none; color: #ffff00; }
+.kf-state-btn[data-state-key="descanso"]   { background: none; color: #00ff00; }
+.kf-state-btn[data-state-key="redes"]      { background: none; color: #00ffff; }
+.kf-state-btn[data-state-key="hobbie"]     { background: none; color: #0000ff; }
+.kf-state-btn[data-state-key="navegacao"]  { background: none; color: #8b00ff; }
+.kf-state-btn[data-state-key="familia"]    { background: none; color: #e6e6e6; }
+
+/* ============================================================
+   UI-1 — HARMONIZAÇÃO ATLAS
+   ============================================================ */
+
+.kf-state-btn {
+    background: #0a0f17 !important;
+    border: 1.8px solid currentColor !important;
+    border-radius: 14px !important;
+    padding: 6px 14px !important;
+    font-weight: 500 !important;
+    cursor: pointer;
+    transition: 0.18s ease-out;
+}
+
+.kf-state-btn:hover {
+    filter: drop-shadow(0 0 6px currentColor);
+    transform: translateY(-1px);
+}
+
+.kf-state-btn::after {
+    width: 11px;
+    height: 11px;
+    margin-left: 8px;
+    background: currentColor;
+}
+
+/* Botões –Foco e +Foco */
+#btn-focus-minus,
+#btn-focus-plus {
+    background: #0a0f17 !important;
+    border: 1.8px solid currentColor !important;
+    border-radius: 14px !important;
+    padding: 6px 14px !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+}
+
+#btn-focus-minus { color: #ff4d4d !important; }
+#btn-focus-plus  { color: #5dff72 !important; }
+
+#btn-focus-minus::after,
+#btn-focus-plus::after {
+    width: 11px;
+    height: 11px;
+    margin-left: 8px;
+}
+
+/* CONTROLS CARD */
+.kf-controls-section {
+    background: #080c11 !important;
+    border: 1px solid #112233 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 0 18px #00111f inset;
+    padding: 28px !important;
+}
+
+.kf-controls-section h2 {
+    font-size: 22px !important;
+    margin-bottom: 18px !important;
+    color: #cfeaff !important;
+}
+
+/* Percentagem inline */
+#focus-inline-percent {
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    color: #00dfff !important;
+    margin-left: 4px !important;
+}
+
+/* ============================================================
+   EIXO LÓGICO — CANVAS E RÉGUA
+   ============================================================ */
+
+#hybrid-axis-canvas {
+    background: #050a14;
+    border-radius: 10px;
+    box-shadow: 0 0 18px #00131f inset;
+    display: block;
+    margin-top: 10px;
+}
+
+#hybrid-axis-controls button {
+    background: #0a0f17;
+    border: 1.4px solid #00e3ff;
+    border-radius: 12px;
+    padding: 6px 14px;
+    cursor: pointer;
+    color: #00e3ff;
+}
+
+#hybrid-axis-ruler {
+    display: block;
+    background: #04070d;
+    border-radius: 10px;
+    box-shadow: 0 0 14px #00131f inset;
+}
+
+.ruler-cursor-line {
+    position: absolute;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: #00e3ff;
+}
+
+.ruler-segment-mark {
+    position: absolute;
+    top: 8px;
+    width: 4px;
+    height: calc(100% - 16px);
+    background: currentColor;
+    border-radius: 2px;
+}
+
+/* ============================================================
+   REORDENAÇÃO ESTRUTURAL
+   ============================================================ */
+
+.kf-panel-left {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 25px !important;
+}
+
+.kf-controls-section {
+    grid-column: 1 !important;
+}
+
+.kf-card-focus {
+    grid-column: 2 !important;
+}
+
+.kf-card-minilines {
+    grid-column: 1 / span 2 !important;
+}
+
+.kf-panel-right {
+    margin-top: 35px !important;
+}
+
+.kf-main {
+    display: block !important;
+}
+
+/* ============================================================
+   ADIÇÃO FINAL — COMANDO BLINDADO (BLOCO B)
+   ============================================================ */
+
+.kf-graph-pattern-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    margin-top: 10px;
+    margin-bottom: 6px;
+}
+
+.kf-graph-pattern-controls button {
+    background: #0a0f17;
+    border: 1.8px solid currentColor;
+    border-radius: 14px;
+    padding: 6px 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.18s ease-out;
+    color: currentColor;
+}
+
+#graph-focus-minus { color: #ff4d4d; }
+#graph-focus-plus  { color: #5dff72; }
+
+.kf-graph-pattern-controls button:hover {
+    filter: drop-shadow(0 0 6px currentColor);
+    transform: translateY(-1px);
+}
+
+.graph-inline-percent {
+    font-size: 16px;
+    font-weight: 600;
+    color: #00e3ff;
+    opacity: 0.85;
+    margin-left: 6px;
+}
+
+/* ============================================================
+   PATCH — GLOW DE HOLOGRAMA VIA BOX-SHADOW (SEM CONFLITO)
+   ============================================================ */
+
+/* remove qualquer filter animado do holograma */
+.kf-holograma-mini-core {
+    filter: none !important;
+}
+
+/* glow real passa a ser box-shadow */
+.kf-holograma-mini-core:not(.holo-neutral) {
+    box-shadow: 0 0 18px currentColor;
+}
+
+/* pulsação passa a animar box-shadow, não filter */
+@keyframes holoPulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 10px currentColor;
+    }
+    50% {
+        transform: scale(1.08);
+        box-shadow: 0 0 28px currentColor;
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 10px currentColor;
+    }
+}
+
+/* ============================================================
+   PATCH — RESPIRAÇÃO SEMÂNTICA ENTRE CAMPOS LÓGICOS
+   Eixo Lógico (cenográfico)  →  Cards Operacionais
+   ============================================================ */
+
+/* 1) Pausa vertical clara após o Eixo Lógico */
+.kf-card.kf-card-spectrum + .kf-main {
+    margin-top: 48px; /* ~1,5x do ritmo padrão */
+}
+
+/* 2) Micro-divisor atmosférico (não visível como linha) */
+.kf-main {
+    position: relative;
+}
+
+.kf-main::before {
+    content: "";
+    position: absolute;
+    top: -22px;
+    left: 0;
+    right: 0;
+    height: 22px;
+    pointer-events: none;
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.35),
+        rgba(0,0,0,0.0)
+    );
+}
+
+/* 3) Mantém tudo intacto: sem mexer em cards */
+
+/* ============================================================
+   PATCH — REMOÇÃO DO TEXTO/ÍCONE "HIPERFOCO"
+   Cartão: Última hora (zoom)
+   ============================================================ */
+
+/* Esconde qualquer rótulo textual de estado dentro da barra */
+.kf-last-hour .state-label,
+.kf-last-hour .state-icon,
+.kf-last-hour .alert,
+.kf-last-hour .badge,
+.kf-last-hour span:has(svg),
+.kf-last-hour span:has(img) {
+    display: none !important;
+}
+
+/* ============================================================
+   OPÇÃO A — ESTABILIZAÇÃO REAL (SEM TOCAR NO SCRIPT)
+   - impede reflow/vazamento do bloco semântico no cartão Última Hora
+   ============================================================ */
+
+.kf-card-chart {
+    position: relative;
+    contain: layout paint;
+}
+
+#insight-alerts-block[data-scope="semantic-disabled"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0;
+}
+
+/* ======================================================================
+   CONTENÇÃO GLOBAL DO LAYOUT — TRAVA HORIZONTAL DEFINITIVA
+   ====================================================================== */
+
+/* 1) Nunca permitir overflow horizontal da página */
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* 2) Container principal do Kripta-Focus contido no viewport */
+.atlas-container {
+  max-width: 1280px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* 3) Qualquer seção não pode vazar horizontalmente */
+.kf-section,
+.kf-row-spectrum,
+.kf-main,
+.kf-card {
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* 4) Canvas e barras nunca podem forçar largura extra */
+canvas,
+#day-thermometer-wrapper {
+  max-width: 100%;
+  display: block;
+}
+
+/* ============================================================
+   DESATIVAÇÃO SEGURA — BARRA DE ENERGIA ATUAL
+   ============================================================ */
+#day-thermometer-wrapper {
+  display: none !important;
+}
+
+/* ============================================================
+   BARRA ELETROMAGNÉTICA CENOGRÁFICA — LOOP CONTÍNUO
+   ============================================================ */
+
+.kf-energy-decorative {
+  width: 100%;
+  height: 28px;
+  border-radius: 14px;
+  background: #050c14;
+  overflow: hidden;
+  position: relative;
+  margin-top: 12px;
+}
+
+.kf-energy-wave {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    #00a8ff,
+    #00ffea,
+    #00ff6a,
+    #baff00,
+    #fff200,
+    #ffb300,
+    #ff6a00,
+    #ff0000,
+    #00a8ff
+  );
+  background-size: 300% 100%;
+  animation: energyFlow 14s linear infinite;
+  opacity: 0.85;
+}
+
+@keyframes energyFlow {
+  from { background-position:   0% 50%; }
+  to   { background-position: 300% 50%; }
+}
+
+/* ============================================================
+   PATCH #1 — UNIFORMIZAÇÃO DO CARTÃO DE CONTROLES (v1 BLINDADA)
+   Escopo:
+   - Remove duplicação visual do estado atual
+   - Uniformiza o botão "Resetar Dia" com os demais
+   - Mantém JS, IDs e estrutura intactos
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1) ELIMINA DUPLICAÇÃO DO ESTADO (VISUAL APENAS)
+   Mantém o pill como fonte única do estado
+   ------------------------------------------------------------ */
+
+/* Texto "Estado atual: trabalho" fica neutro/oculto */
+#focus-status-text {
+  display: none !important;
+}
+
+/* Garante o pill como estado oficial visível */
+#focus-state-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1;
+  margin-top: 10px;
+}
+
+/* ------------------------------------------------------------
+   2) GRID UNIFICADO DE BOTÕES NO CARTÃO
+   ------------------------------------------------------------ */
+
+.kf-controls-section .kf-controls,
+.kf-controls-section .kf-state-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Espaçamento vertical consistente dentro do cartão */
+.kf-controls-section > * + * {
+  margin-top: 16px;
+}
+
+/* ------------------------------------------------------------
+   3) CONTRATO VISUAL ÚNICO PARA TODOS OS BOTÕES DO CARTÃO
+   ------------------------------------------------------------ */
+
+.kf-controls-section button,
+.kf-controls-section .kf-state-btn,
+#btn-reset-day {
+  background: #0a0f17 !important;
+  border-radius: 14px !important;
+  padding: 6px 14px !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  line-height: 1 !important;
+  height: 34px !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.18s ease-out;
+}
+
+/* Hover unificado */
+.kf-controls-section button:hover {
+  transform: translateY(-1px);
+  filter: drop-shadow(0 0 6px currentColor);
+}
+
+/* ------------------------------------------------------------
+   4) RESETAR DIA — MESMO CORPO, SEMÂNTICA DIFERENTE
+   ------------------------------------------------------------ */
+
+/* Mantém aparência uniforme, mas com tom neutro/alerta */
+#btn-reset-day {
+  color: #ff9a9a !important;
+  border: 1.8px solid #ff9a9a !important;
+  background: #120a0a !important;
+}
+
+/* Hover sutil (não dominante) */
+#btn-reset-day:hover {
+  filter: drop-shadow(0 0 6px #ff9a9a55);
+}
+
+/* ------------------------------------------------------------
+   FIM DO PATCH #1
+   Base v1 preservada | Ajuste visual concluído
+   ============================================================ */
+
+/* ============================================================
+   PATCH #2 — CABEÇALHO GLOBAL KRIPTA-FOCUS
+   Totalmente aditivo | Base v1 preservada
+   ============================================================ */
+
+.kf-global-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 32px;
+  align-items: center;
+  padding: 22px 28px;
+  margin-bottom: 28px;
+  background: #050a14;
+  border-bottom: 1px solid #0c2538;
+}
+
+/* MARCA */
+.kf-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.kf-logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #00e3ff;
+  color: #001018;
+  font-weight: 800;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kf-corp {
+  font-size: 16px;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+/* TÍTULO */
+.kf-title-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.kf-product-title {
+  font-size: 36px;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+.kf-slogan {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+/* MINI PAINÉIS */
+.kf-mini-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.kf-panel-title {
+  font-size: 12px;
+  opacity: 0.6;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.kf-panel-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* BOTÕES E LINKS — CONTRATO ÚNICO */
+.kf-panel-buttons button,
+.kf-panel-buttons a {
+  padding: 6px 12px;
+  border-radius: 12px;
+  background: #0a0f17;
+  border: 1.6px solid #00e3ff;
+  color: #00e3ff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: 0.18s ease-out;
+}
+
+.kf-panel-buttons button:hover,
+.kf-panel-buttons a:hover {
+  transform: translateY(-1px);
+  filter: drop-shadow(0 0 6px #00e3ff);
+}
+
+/* RESPONSIVIDADE SEGURA (SEM REFLUXO) */
+@media (max-width: 1100px) {
+  .kf-global-header {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+}
+
+/* ============================================================
+   PATCH #2.1 — LIMPEZA DO CABEÇALHO GLOBAL
+   Remove título e slogan APENAS no header novo
+   Base v1 preservada
+   ============================================================ */
+
+/* Oculta bloco de título no cabeçalho global */
+.kf-global-header .kf-title-block {
+  display: none !important;
+}
+
+/* ============================================================
+   PATCH #2.2 — CABEÇALHO HORIZONTAL (ANTI-EMPILHAMENTO)
+   Reorganiza visualmente os painéis sem tocar no HTML
+   ============================================================ */
+
+/* Cabeçalho mais baixo e linear */
+.kf-global-header {
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: 36px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+/* Marca sempre à esquerda */
+.kf-brand {
+  flex-shrink: 0;
+}
+
+/* Mini painéis viram faixas horizontais */
+.kf-mini-panel {
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Remove título empilhado ("Interfaces", "Ecossistema") */
+.kf-panel-title {
+  display: none !important;
+}
+
+/* Botões sempre em linha */
+.kf-panel-buttons {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+}
+
+/* Botões de UI mais compactos */
+.kf-mini-panel:first-of-type
+.kf-panel-buttons button {
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 10px;
+}
+
+/* Links de MVP levemente maiores */
+.kf-mini-panel:last-of-type
+.kf-panel-buttons a {
+  padding: 6px 14px;
+  font-size: 13px;
+}
+
+/* Evita quebra visual em telas médias */
+@media (max-width: 1200px) {
+  .kf-panel-buttons {
+    flex-wrap: wrap;
+  }
+}
+
+/* ============================================================
+   PRODUCT HERO — AJUSTE 1
+   Slogan imediatamente abaixo do título
+   ============================================================ */
+
+/* Garante hierarquia vertical clara no Product Hero */
+.kf-header h1 {
+  margin-bottom: 10px;
+}
+
+/* Slogan como subtítulo direto do produto */
+.kf-subtitle {
+  display: block;
+  margin-top: 0;
+  font-size: 15px;
+  font-weight: 500;
+  opacity: 0.75;
+  letter-spacing: 0.3px;
+}
+
+/* ============================================================
+   PRODUCT HERO — CORREÇÃO DE VISIBILIDADE DO SLOGAN
+   Garante leitura clara abaixo do título
+   ============================================================ */
+
+.kf-header .kf-subtitle {
+  display: block !important;
+  margin-top: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.75);
+  opacity: 1 !important;
+  letter-spacing: 0.4px;
+}
+
+/* ============================================================
+   UI-3 — CONTRATO VISUAL MÍNIMO (ESTRUTURAL)
+   Escopo: larguras, respiros, ritmo vertical
+   Tema-agnóstico | Aditivo | Blindado
+   ============================================================ */
+
+/* 1) Container e largura de leitura */
+.ui3-hero,
+.ui3-content,
+.ui3-footer {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* 2) Respiro geral da UI-3 */
+.ui3-hero {
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+.ui3-content {
+  padding-top: 0;
+  padding-bottom: 64px;
+}
+
+.ui3-footer {
+  padding-top: 24px;
+  padding-bottom: 64px;
+}
+
+/* 3) Hero institucional — ritmo */
+.ui3-hero-header h1 {
+  margin: 0 0 12px 0;
+}
+
+.ui3-hero-subtitle {
+  margin: 0;
+}
+
+/* Espaço entre Hero e símbolo */
+.ui3-hero + .ui3-symbolic {
+  margin-top: 48px;
+}
+
+/* 4) Bloco simbólico (SVG) — isolamento */
+.ui3-symbolic {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ui3-symbolic-figure {
+  max-width: 900px;   /* símbolo pode respirar mais */
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Espaço entre símbolo e texto */
+.ui3-symbolic + .ui3-content {
+  margin-top: 56px;
+}
+
+/* 5) Texto base — ritmo calmo */
+.ui3-section h2 {
+  margin: 0 0 14px 0;
+}
+
+.ui3-section p {
+  margin: 0;
+}
+
+/* Espaço entre seções */
+.ui3-section + .ui3-section {
+  margin-top: 36px;
+}
+
+/* 6) Alinhamentos */
+.ui3-content,
+.ui3-footer {
+  text-align: left;
+}
+
+.ui3-hero,
+.ui3-symbolic {
+  text-align: center;
+}
+
+/* 7) Altura mínima implícita (experiência) */
+@media (min-height: 700px) {
+  .ui3-hero,
+  .ui3-symbolic,
+  .ui3-content {
+    min-height: calc(70vh / 3);
+  }
+}
+
+/* ============================================================
+   FIM DO CONTRATO VISUAL MÍNIMO — UI-3
+   ============================================================ */
+
+/* ============================================================
+   UI-3 — CENTRALIZAÇÃO FORÇADA DA IMAGEM SIMBÓLICA (PNG)
+   ============================================================ */
+
+.ui3-symbolic-figure {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+
+.ui3-symbolic-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 420px;
+  width: 100%;
+  height: auto;
+}
+
+/* ============================================================
+   UI-3 — BOTÃO DE RETORNO (VISÍVEL, NÃO AGRESSIVO)
+   ============================================================ */
+
+.ui3-back {
+  text-align: center;
+  margin-top: 56px;
+  margin-bottom: 32px;
+}
+
+.ui3-back-link {
+  display: inline-block;
+  padding: 10px 18px;
+  font-size: 0.95rem;
+  text-decoration: none;
+
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 999px;
+
+  opacity: 0.85;
+}
+
+.ui3-back-link:hover {
+  opacity: 1;
+}
+
+/* ============================================================
+   UI-2 — CONTRATO VISUAL MÍNIMO (HISTÓRICO)
+   Estrutural | Tema-agnóstico | Aditivo | Blindado
+   ============================================================ */
+
+/* 1) Coluna principal */
+.ui2-hero,
+.ui2-history,
+.ui2-footer {
+  max-width: 880px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* 2) Hero compacto */
+.ui2-hero {
+  padding-top: 40px;
+  padding-bottom: 18px;
+}
+
+.ui2-hero h1 {
+  margin: 0 0 8px 0;
+}
+
+.ui2-subtitle {
+  margin: 0;
+  opacity: 0.75;
+}
+
+/* 3) Lista de histórico */
+.ui2-history {
+  padding-top: 18px;
+  padding-bottom: 56px;
+}
+
+/* 4) Linha de registro (3 colunas) */
+.ui2-entry {
+  display: grid;
+  grid-template-columns: 140px 1fr 120px;
+  gap: 16px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+/* 5) Hierarquia textual */
+.ui2-entry-date {
+  opacity: 0.65;
+}
+
+.ui2-entry-state {
+  font-weight: 600;
+}
+
+.ui2-entry-duration {
+  text-align: right;
+  opacity: 0.65;
+}
+
+/* 6) Rodapé / retorno */
+.ui2-footer {
+  padding-top: 18px;
+  padding-bottom: 48px;
+  text-align: center;
+}
+
+.ui2-back-link {
+  display: inline-block;
+  padding: 10px 18px;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 999px;
+  opacity: 0.85;
+}
+
+.ui2-back-link:hover {
+  opacity: 1;
+}
+
+/* ============================================================
+   FIM DO CONTRATO VISUAL MÍNIMO — UI-2
+   ============================================================ */
+
+.focus-daily-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.snapshot-card {
+  background: #0b0f14;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* === Barra de Energia (Hero) === */
+.focus-gradient-bar {
+  width: 100%;
+  height: 14px;
+  margin: 18px 0 28px 0;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    #00ffcc 0%,
+    #66ff66 25%,
+    #ffee55 50%,
+    #ff9933 75%,
+    #ff3366 100%
+  );
+  box-shadow:
+    0 0 18px rgba(0, 255, 204, 0.25),
+    inset 0 0 10px rgba(255, 255, 255, 0.15);
+}
+
+/* =========================================================
+   BARRA DE ENERGIA — MOVIMENTO + ALTURA
+   ========================================================= */
+
+.focus-gradient-bar {
+  width: 100%;
+  height: 24px; /* +1cm aprox (antes ~14px) */
+  margin: 18px 0 28px 0;
+  border-radius: 999px;
+
+  background: linear-gradient(
+    90deg,
+    #00ffcc 0%,
+    #66ff66 25%,
+    #ffee55 50%,
+    #ff9933 75%,
+    #ff3366 100%
+  );
+  background-size: 300% 100%;
+
+  animation: energyFlow 6s linear infinite;
+
+  box-shadow:
+    0 0 22px rgba(0, 255, 204, 0.35),
+    inset 0 0 14px rgba(255, 255, 255, 0.18);
+}
+
+/* MOVIMENTO CONTÍNUO DA ENERGIA */
+@keyframes energyFlow {
+  0%   { background-position:   0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* =========================================================
+   BARRA DE ENERGIA — FLUXO LIMPO + 1cm REAL
+   ========================================================= */
+
+.focus-gradient-bar {
+  position: relative;
+  width: 100%;
+  height: 38px; /* 1cm real */
+  margin: 20px 0 32px 0;
+  border-radius: 999px;
+  overflow: hidden;
+
+  background: linear-gradient(
+    90deg,
+    #00ffcc 0%,
+    #66ff66 25%,
+    #ffee55 50%,
+    #ff9933 75%,
+    #ff3366 100%
+  );
+
+  box-shadow:
+    0 0 26px rgba(0, 255, 204, 0.35),
+    inset 0 0 18px rgba(255, 255, 255, 0.18);
+}
+
+/* CAMADA DE FLUXO (ENERGIA) */
+.focus-gradient-bar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -40%;
+  width: 40%;
+  height: 100%;
+
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.45) 50%,
+    transparent 100%
+  );
+
+  animation: energySweep 3.5s linear infinite;
+}
+
+/* MOVIMENTO LIMPO */
+@keyframes energySweep {
+  from { left: -40%; }
+  to   { left: 100%; }
+}
+
+/* =========================================================
+   BARRA DE ENERGIA — LOOP CONTÍNUO DE CORES
+   ========================================================= */
+
+.focus-gradient-bar {
+  width: 100%;
+  height: 38px; /* ~1cm real */
+  margin: 20px 0 32px 0;
+  border-radius: 999px;
+
+  background: linear-gradient(
+    90deg,
+    #00ffcc 0%,
+    #66ff66 20%,
+    #ffee55 40%,
+    #ff9933 60%,
+    #ff3366 80%,
+    #00ffcc 100%
+  );
+
+  background-size: 300% 100%;
+  animation: energyLoop 8s linear infinite;
+
+  box-shadow:
+    0 0 26px rgba(0, 255, 204, 0.35),
+    inset 0 0 18px rgba(255, 255, 255, 0.18);
+}
+
+/* LOOP CONTÍNUO */
+@keyframes energyLoop {
+  from { background-position:   0% 50%; }
+  to   { background-position: 100% 50%; }
+}
+
+/* =========================================================
+   BARRA DE ENERGIA — FLUXO CONTÍNUO REAL (SEM QUEBRA)
+   ========================================================= */
+
+.focus-gradient-bar {
+  position: relative;
+  width: 100%;
+  height: 38px; /* ~1 cm real */
+  margin: 20px 0 32px 0;
+  border-radius: 999px;
+  overflow: hidden;
+
+  background: #0b0f14;
+  box-shadow:
+    0 0 26px rgba(0, 255, 204, 0.35),
+    inset 0 0 18px rgba(255, 255, 255, 0.18);
+}
+
+/* FITA DE ENERGIA (MUITO MAIS LARGA QUE A BARRA) */
+.focus-gradient-bar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 300%;   /* largura maior = loop invisível */
+  height: 100%;
+
+  background: linear-gradient(
+    90deg,
+    #00ffcc 0%,
+    #66ff66 16.6%,
+    #ffee55 33.3%,
+    #ff9933 50%,
+    #ff3366 66.6%,
+    #00ffcc 83.3%,
+    #66ff66 100%
+  );
+
+  animation: energyFlowLinear 12s linear infinite;
+  will-change: transform;
+}
+
+/* MOVIMENTO FÍSICO CONTÍNUO */
+@keyframes energyFlowLinear {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-66.666%);
+  }
+}
+
+/* =========================================================
+   BARRA DE ENERGIA — FLUXO PERIÓDICO PERFEITO
+   ========================================================= */
+
+.focus-gradient-bar {
+  position: relative;
+  width: 100%;
+  height: 38px; /* ~1 cm real */
+  margin: 20px 0 32px 0;
+  border-radius: 999px;
+  overflow: hidden;
+
+  background: #0b0f14;
+  box-shadow:
+    0 0 28px rgba(0, 255, 204, 0.35),
+    inset 0 0 18px rgba(255, 255, 255, 0.18);
+}
+
+/* FITA DE ENERGIA CONTÍNUA */
+.focus-gradient-bar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 200%;
+  height: 100%;
+
+  background: repeating-linear-gradient(
+    90deg,
+    #00ffcc 0%,
+    #66ff66 10%,
+    #ffee55 20%,
+    #ff9933 30%,
+    #ff3366 40%,
+    #00ffcc 50%
+  );
+
+  animation: energyFlowPerfect 10s linear infinite;
+  will-change: transform;
+}
+
+/* LOOP PERFEITO (PERÍODO EXATO = 50%) */
+@keyframes energyFlowPerfect {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/*
+#dna2-ssignal,
+.kf-logical-axis {
+  outline: 2px solid red !important;
+  z-index: 10 !important;
+  position: relative !important;
+}
+/*
+
+/* =========================================================
+   EIXO LÓGICO — VISUALIZAÇÃO ESTRUTURAL
+   ========================================================= */
+.kf-logical-axis {
+  width: 100%;
+  margin: 24px 0;
+}
+
+.kf-logical-axis .logical-axis-overlay {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.35) 20%,
+    rgba(255,255,255,0.6) 50%,
+    rgba(255,255,255,0.35) 80%,
+    transparent 100%
+  );
+}
+
+/* =========================================================
+   EIXO LÓGICO — VISUAL FINAL (NEUTRO)
+   ========================================================= */
+.kf-logical-axis {
+  width: 100%;
+  margin: 28px 0;
+}
+
+.kf-logical-axis .logical-axis-overlay {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.18) 20%,
+    rgba(255,255,255,0.35) 50%,
+    rgba(255,255,255,0.18) 80%,
+    transparent 100%
+  );
+}
+
+/* =========================================================
+   EIXO LÓGICO — VISUAL REAL (NÃO DEBUG)
+   ========================================================= */
+.kf-logical-axis {
+  width: 100%;
+  margin: 24px 0;
+}
+
+.kf-logical-axis .logical-axis-overlay {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: rgba(255,255,255,0.35);
+}
+
+/* =========================================================
+   PRODUCT HERO — ESTILO FINAL (APENAS VISUAL)
+   ========================================================= */
+
+.kf-header {
+  position: relative;
+  text-align: center;
+  padding: 64px 24px 48px;
+  margin-bottom: 12px;
+  background:
+    radial-gradient(
+      120% 120% at 50% -20%,
+      rgba(0, 227, 255, 0.18),
+      transparent 55%
+    );
+}
+
+/* TÍTULO */
+.kf-header h1 {
+  font-size: 56px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  margin: 0;
+  color: #ffffff;
+  text-shadow:
+    0 0 22px rgba(0, 227, 255, 0.25),
+    0 0 4px rgba(255, 255, 255, 0.15);
+}
+
+/* SLOGAN */
+.kf-header .kf-subtitle {
+  margin-top: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  color: rgba(255,255,255,0.75);
+}
+
+/* SUBLINHADO CENOGRÁFICO */
+.kf-header::after {
+  content: "";
+  display: block;
+  width: 260px;
+  height: 2px;
+  margin: 28px auto 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0,227,255,0.9),
+    transparent
+  );
+  box-shadow: 0 0 14px rgba(0,227,255,0.6);
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+  .kf-header {
+    padding: 48px 16px 40px;
+  }
+
+  .kf-header h1 {
+    font-size: 42px;
+  }
+
+  .kf-header .kf-subtitle {
+    font-size: 15px;
+  }
+}
+
+/* =========================================================
+   BOTÃO — TIRAR SNAPSHOT (ELEGANTE + SUAVE)
+   ========================================================= */
+
+#btn-history-snapshot {
+  appearance: none;
+  border: 1px solid rgba(0, 227, 255, 0.35);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 227, 255, 0.18),
+      rgba(0, 227, 255, 0.05)
+    );
+  color: #cfefff;
+
+  padding: 10px 18px;
+  border-radius: 999px;
+
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
+
+  box-shadow:
+    0 0 0 rgba(0, 227, 255, 0),
+    inset 0 0 0 rgba(255,255,255,0);
+}
+
+/* HOVER — LEVE, SEM AGRESSÃO */
+#btn-history-snapshot:hover {
+  border-color: rgba(0, 227, 255, 0.75);
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 227, 255, 0.28),
+      rgba(0, 227, 255, 0.10)
+    );
+
+  box-shadow:
+    0 0 14px rgba(0, 227, 255, 0.35),
+    inset 0 0 12px rgba(255,255,255,0.12);
+
+  transform: translateY(-1px);
+}
+
+/* ACTIVE — RESPOSTA TÁTIL SUAVE */
+#btn-history-snapshot:active {
+  transform: translateY(0);
+  box-shadow:
+    0 0 6px rgba(0, 227, 255, 0.25),
+    inset 0 0 8px rgba(0,0,0,0.35);
+}
+
+/* FOCUS — ACESSÍVEL, DISCRETO */
+#btn-history-snapshot:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px rgba(0, 227, 255, 0.35),
+    0 0 16px rgba(0, 227, 255, 0.45);
+}
+
+.dur-short {
+  opacity: 0.6;
+}
+
+.dur-normal {
+  opacity: 0.9;
+}
+
+.dur-long {
+  font-weight: 600;
+}
+
+.kf-panel-secondary {
+  margin-left: 24px;
+  padding-left: 24px;
+  border-left: 1px solid rgba(255,255,255,0.15);
+  opacity: 0.9;
+}
+
+.kf-panel-secondary a {
+  border-color: rgba(255,255,255,0.35);
+}
+/* =========================================================
+   UI-2 — COMENTÁRIOS (v1.0)
+   ========================================================= */
+
+.ui2-header {
+  padding: 20px 0;
+}
+
+.ui2-nav {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ui2-main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px 40px;
+}
+
+.ui2-card {
+  padding: 24px;
+}
+
+.ui2-subtitle {
+  opacity: 0.7;
+  margin-bottom: 16px;
+}
+
+/* LISTA DE COMENTÁRIOS */
+
+.ui2-comments-list {
+  max-height: 360px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+  padding-right: 6px;
+}
+
+.ui2-comment {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.ui2-comment-meta {
+  font-size: 12px;
+  opacity: 0.6;
+  margin-bottom: 4px;
+}
+
+.ui2-comment-text {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ENTRADA (VISUAL) */
+
+.ui2-comment-input {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  opacity: 0.5;
+}
+
+.ui2-comment-input textarea {
+  resize: none;
+  min-height: 80px;
+}
+
+.ui2-card {
+  border-radius: 16px;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.035),
+    rgba(255,255,255,0.015)
+  );
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.035),
+    0 10px 30px rgba(0,0,0,0.25);
+}
+
+.ui2-comment {
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+.ui2-comment-meta {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.45;
+}
+
+.ui2-comment-text {
+  margin-top: 8px;
+  line-height: 1.75;
+  opacity: 0.95;
+}
+
+.ui2-comment-input textarea {
+  border-radius: 14px;
+  padding: 14px;
+  background: radial-gradient(
+    circle at top left,
+    rgba(255,255,255,0.05),
+    rgba(255,255,255,0.02)
+  );
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.ui2-comment-input button {
+  margin-top: 6px;
+  align-self: flex-end;
+  opacity: 0.45;
+  transition: opacity 0.3s ease;
+}
+
+.ui2-comment-input button:hover {
+  opacity: 0.7;
+}
+
+.ui2-comments-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ui2-comments-list::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.12);
+  border-radius: 10px;
+}
+
+.ui2-comments-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ui2-comment-input textarea {
+  color: rgba(255,255,255,0.95);
+  caret-color: rgba(255,255,255,0.9);
+}
+
+.ui2-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.ui2-comment-input {
+  order: 0;
+  margin-bottom: 18px;
+}
+
+.ui2-comments-list {
+  order: 1;
+}
